@@ -1,4 +1,5 @@
 import pandas as pd
+pd.set_option('display.width', 1000)
 
 def juntar_planilhas(excel_file: pd.ExcelFile) -> pd.ExcelFile:
     xls = pd.ExcelFile(excel_file)
@@ -28,11 +29,31 @@ def tratamentos_dl(excel_tratado: pd.ExcelFile):
     #codificando a coluna passageiros
     tb_passageiros = df[["Passageiro","Origem","Destino"]]
     tb_passageiros['cod_passageiro'] = tb_passageiros["Passageiro"].rank(method='dense').astype(int)
-    tb_passageiros['cod_origem'] = tb_passageiros["Origem"].rank(method='dense').astype(int)
-    tb_passageiros['cod_destino'] = tb_passageiros["Destino"].rank(method='dense').astype(int)
-    print(tb_passageiros.head())
-    
 
+    print(tb_passageiros)
+
+
+
+
+
+
+    """
+    Fazer essa camada apos separar os destinos e origem em colunas ( rua, numero, bairro, se_e_residencia )
+        tb_passageiros['cod_origem'] = tb_passageiros["Origem"].rank(method='dense').astype(int)
+        tb_passageiros['cod_destino'] = tb_passageiros["Destino"].rank(method='dense').astype(int)
+        
+        tb_passageiros_enderecos_unicos = pd.unique(tb_passageiros[["cod_origem","cod_destino"]].values.ravel("K"))
+        tb_passageiros_enderecos_mapping = {code: idx for idx, code in enumerate(tb_passageiros_enderecos_unicos, start=1)}
+
+        tb_passageiros["cod_origem"] = tb_passageiros["cod_origem"].map(tb_passageiros_enderecos_mapping)
+        tb_passageiros["cod_destino"] = tb_passageiros["cod_destino"].map(tb_passageiros_enderecos_mapping)
+
+        print(tb_passageiros)
+        
+        #df_passageiros = tb_passageiros.loc[:, ["cod_passageiro","Passageiro","cod_origem","cod_destino"]]
+        #df_enderecos = tb_passageiros.loc[:, ["cod_origem","Origem","cod_destino","Destino"]]
+
+"""
 
 
 
